@@ -22,8 +22,8 @@ class LineSeeder extends Seeder
         foreach($lines as $published_line_name => $line_ref){
 
             Line::create([
-                "line_ref" => $published_line_name,
-                "published_line_name" => $line_ref
+                "line_ref" => $line_ref,
+                "published_line_name" => $published_line_name
             ]);
         }
 
