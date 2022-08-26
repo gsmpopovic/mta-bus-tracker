@@ -80,11 +80,13 @@ class BusTime {
 
             $response = $client->send($request, $query_params);
 
-            $this->captureResponse($response);
-
         } catch(ClientException $e) {
 
             echo (string) $e->getResponse();
+
+        } finally {
+
+            $this->captureResponse($response);
 
         }
 
