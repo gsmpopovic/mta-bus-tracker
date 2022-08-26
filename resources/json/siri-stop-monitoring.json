@@ -1,0 +1,194 @@
+{
+    "Siri": {
+        "ServiceDelivery": {
+            "ResponseTimestamp": "2022-08-25T20:25:51.081-04:00",
+            "StopMonitoringDelivery": [
+                {
+                    "MonitoredStopVisit": [
+                        {
+                            "MonitoredVehicleJourney": {
+                                "LineRef": "MTA NYCT_B63",
+                                "DirectionRef": "1",
+                                "FramedVehicleJourneyRef": {
+                                    "DataFrameRef": "2022-08-25",
+                                    "DatedVehicleJourneyRef": "MTA NYCT_JG_C2-Weekday-122100_B63_679"
+                                },
+                                "JourneyPatternRef": "MTA_B630011",
+                                "PublishedLineName": "B63",
+                                "OperatorRef": "MTA NYCT",
+                                "OriginRef": "MTA_901601",
+                                "DestinationName": "BAY RIDGE SHORE RD via 5 AV",
+                                "SituationRef": [
+                                    {
+                                        "SituationSimpleRef": "MTA NYCT_lmm:planned_work:4268"
+                                    }
+                                ],
+                                "Monitored": true,
+                                "VehicleLocation": {
+                                    "Longitude": -73.997993,
+                                    "Latitude": 40.691223
+                                },
+                                "Bearing": 345.1414,
+                                "ProgressRate": "normalProgress",
+                                "BlockRef": "MTA NYCT_JG_C2-Weekday_C_JG_41940_B63-674",
+                                "VehicleRef": "MTA NYCT_398",
+                                "MonitoredCall": {
+                                    "AimedArrivalTime": "2022-08-25T20:40:30.000-04:00",
+                                    "ExpectedArrivalTime": "2022-08-25T20:42:25.975-04:00",
+                                    "AimedDepartureTime": "2022-08-25T20:40:30.000-04:00",
+                                    "ExpectedDepartureTime": "2022-08-25T20:42:25.975-04:00",
+                                    "Extensions": {
+                                        "Distances": {
+                                            "PresentableDistance": "1.8 miles away",
+                                            "DistanceFromCall": 2902.67,
+                                            "StopsFromCall": 12,
+                                            "CallDistanceAlongRoute": 3328.41
+                                        }
+                                    },
+                                    "StopPointRef": "MTA_308214",
+                                    "VisitNumber": 1,
+                                    "StopPointName": "5 AV/UNION ST"
+                                },
+                                "OnwardCalls": {}
+                            },
+                            "RecordedAtTime": "2022-08-25T20:25:34.000-04:00"
+                        },
+                        {
+                            "MonitoredVehicleJourney": {
+                                "LineRef": "MTA NYCT_B63",
+                                "DirectionRef": "1",
+                                "FramedVehicleJourneyRef": {
+                                    "DataFrameRef": "2022-08-25",
+                                    "DatedVehicleJourneyRef": "MTA NYCT_JG_C2-Weekday-126100_B63_685"
+                                },
+                                "JourneyPatternRef": "MTA_B630011",
+                                "PublishedLineName": "B63",
+                                "OperatorRef": "MTA NYCT",
+                                "OriginRef": "MTA_901601",
+                                "DestinationName": "BAY RIDGE SHORE RD via 5 AV",
+                                "OriginAimedDepartureTime": "2022-08-25T21:01:00.000-04:00",
+                                "SituationRef": [
+                                    {
+                                        "SituationSimpleRef": "MTA NYCT_lmm:planned_work:4268"
+                                    }
+                                ],
+                                "Monitored": true,
+                                "VehicleLocation": {
+                                    "Longitude": -73.992958,
+                                    "Latitude": 40.661765
+                                },
+                                "Bearing": 44.387703,
+                                "ProgressRate": "normalProgress",
+                                "ProgressStatus": "prevTrip",
+                                "BlockRef": "MTA NYCT_JG_C2-Weekday_C_JG_44820_B63-679",
+                                "VehicleRef": "MTA NYCT_362",
+                                "MonitoredCall": {
+                                    "AimedArrivalTime": "2022-08-25T21:20:30.000-04:00",
+                                    "ExpectedArrivalTime": "2022-08-25T21:19:46.265-04:00",
+                                    "AimedDepartureTime": "2022-08-25T21:20:30.000-04:00",
+                                    "ExpectedDepartureTime": "2022-08-25T21:19:46.265-04:00",
+                                    "Extensions": {
+                                        "Distances": {
+                                            "PresentableDistance": "5.3 miles away",
+                                            "DistanceFromCall": 8539.49,
+                                            "StopsFromCall": 14,
+                                            "CallDistanceAlongRoute": 3328.41
+                                        }
+                                    },
+                                    "StopPointRef": "MTA_308214",
+                                    "VisitNumber": 1,
+                                    "StopPointName": "5 AV/UNION ST"
+                                },
+                                "OnwardCalls": {}
+                            },
+                            "RecordedAtTime": "2022-08-25T20:25:38.000-04:00"
+                        },
+                        {
+                            "MonitoredVehicleJourney": {
+                                "LineRef": "MTA NYCT_B63",
+                                "DirectionRef": "1",
+                                "FramedVehicleJourneyRef": {
+                                    "DataFrameRef": "2022-08-25",
+                                    "DatedVehicleJourneyRef": "MTA NYCT_JG_C2-Weekday-128100_B63_681"
+                                },
+                                "JourneyPatternRef": "MTA_B630011",
+                                "PublishedLineName": "B63",
+                                "OperatorRef": "MTA NYCT",
+                                "OriginRef": "MTA_901601",
+                                "DestinationName": "BAY RIDGE SHORE RD via 5 AV",
+                                "OriginAimedDepartureTime": "2022-08-25T21:21:00.000-04:00",
+                                "SituationRef": [
+                                    {
+                                        "SituationSimpleRef": "MTA NYCT_lmm:planned_work:4268"
+                                    }
+                                ],
+                                "Monitored": true,
+                                "VehicleLocation": {
+                                    "Longitude": -74.012419,
+                                    "Latitude": 40.643064
+                                },
+                                "Bearing": 44.00653,
+                                "ProgressRate": "normalProgress",
+                                "ProgressStatus": "prevTrip",
+                                "BlockRef": "MTA NYCT_JG_C2-Weekday_C_JG_22800_B63-660",
+                                "VehicleRef": "MTA NYCT_414",
+                                "MonitoredCall": {
+                                    "AimedArrivalTime": "2022-08-25T21:39:58.000-04:00",
+                                    "AimedDepartureTime": "2022-08-25T21:39:58.000-04:00",
+                                    "Extensions": {
+                                        "Distances": {
+                                            "PresentableDistance": "7.0 miles away",
+                                            "DistanceFromCall": 11189.2,
+                                            "StopsFromCall": 14,
+                                            "CallDistanceAlongRoute": 3328.41
+                                        }
+                                    },
+                                    "StopPointRef": "MTA_308214",
+                                    "VisitNumber": 1,
+                                    "StopPointName": "5 AV/UNION ST"
+                                },
+                                "OnwardCalls": {}
+                            },
+                            "RecordedAtTime": "2022-08-25T20:25:21.000-04:00"
+                        }
+                    ],
+                    "ResponseTimestamp": "2022-08-25T20:25:51.081-04:00",
+                    "ValidUntil": "2022-08-25T20:26:51.081-04:00"
+                }
+            ],
+            "SituationExchangeDelivery": [
+                {
+                    "Situations": {
+                        "PtSituationElement": [
+                            {
+                                "PublicationWindow": {
+                                    "StartTime": "2022-05-09T00:00:00.000-04:00",
+                                    "EndTime": "2023-02-21T19:00:00.000-05:00"
+                                },
+                                "Severity": "undefined",
+                                "Summary": "Northbound B63 stop on 5th Ave at 36th St has been relocated",
+                                "Description": "Northbound B63 stop on 5th Ave at 36th St has been relocated\nBuses will stop across the street on 5th Ave at 36th St.\n\nWhat's happening?\nSchool construction",
+                                "Affects": {
+                                    "VehicleJourneys": {
+                                        "AffectedVehicleJourney": [
+                                            {
+                                                "LineRef": "MTA NYCT_B63",
+                                                "DirectionRef": "0"
+                                            },
+                                            {
+                                                "LineRef": "MTA NYCT_B63",
+                                                "DirectionRef": "1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "CreationTime": "2022-05-09T11:01:23.000-04:00",
+                                "SituationNumber": "MTA NYCT_lmm:planned_work:4268"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

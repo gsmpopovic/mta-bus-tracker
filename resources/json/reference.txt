@@ -1,0 +1,9 @@
+## Siri Stop Monitoring 
+
+- Reference: https://bustime.mta.info/wiki/Developers/SIRIStopMonitoring
+- Endpoint: http://bustime.mta.info/api/siri/stop-monitoring.json
+
+## Siri Vehicle Monitoring 
+
+- Reference: https://bustime.mta.info/wiki/Developers/SIRIVehicleMonitoring
+- Endpoint: http://bustime.mta.info/api/siri/vehicle-monitoring.json
