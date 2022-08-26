@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 use Database\Seeders\LineSeeder;
 use Database\Seeders\StopSeeder;
+use Database\Seeders\JourneySeeder;
+use Database\Seeders\MonitoredSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +31,12 @@ class DatabaseSeeder extends Seeder
 
         $stop_seeder = new StopSeeder;
         $stop_seeder->run();
+
+        $journey_seeder = new JourneySeeder;
+        $journey_seeder->run();
+
+        $monitored_call = new MonitoredCallSeeder;
+        $monitored_call->run();
 
     }
 }
