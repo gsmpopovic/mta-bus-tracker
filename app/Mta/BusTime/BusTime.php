@@ -132,6 +132,97 @@ class BusTime {
 
     }
 
+    public static function getSiriVehicleMonitoringActivityJson(){
+
+        try {
+
+            $path = resource_path() . DIRECTORY_SEPARATOR . "json" . DIRECTORY_SEPARATOR . "siri-vehicle-monitoring.json";
+        
+            $vehicle_monitoring_json = file_get_contents($path);
+            
+            $vehicle_monitoring_array = json_decode($vehicle_monitoring_json, true);
+    
+            $vehicle_activity = $vehicle_monitoring_array["Siri"]["ServiceDelivery"]["VehicleMonitoringDelivery"][0]["VehicleActivity"];
+    
+            return $vehicle_activity;
+
+        } catch (\Exception $e){
+
+            echo $e->getMessage();
+
+        }
+    
+    }
+
+public static function getUniqueLines(){
+
+    $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+
+    $lines = [];
+
+    foreach($vehicle_activity as $activity){
+
+        $monitored_vehicle_journey = $activity["MonitoredVehicleJourney"];
+
+        $lines[$monitored_vehicle_journey["PublishedLineName"]] = $monitored_vehicle_journey["LineRef"];
+
+    }
+
+    return $lines; 
+
+}
+
+public static function normalizeLineRef($line_ref){
+
+    $prefixes = ["MTA NYCT_", "MTA_", "MTA_NYCT", "MTABC_", "NYCT_", "MTA NYCT_"];
+
+    $line_ref = str_replace($prefixes, "", $line_ref);
+    $line_ref = (string) str_replace("+", "-SBS", $line_ref);
+
+
+    return $line_ref;
+
+}
+
+public static function getUniqueStops(){
+
+    $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+
+    $stops = [];
+
+    foreach($vehicle_activity as $activity){
+
+        $stop = [];
+
+        $monitored_vehicle_journey = $activity["MonitoredVehicleJourney"];
+
+        
+        if(!isset($monitored_vehicle_journey["MonitoredCall"])){
+            continue;
+            //return $monitored_vehicle_journey;
+        }
+
+        $monitored_call = $monitored_vehicle_journey["MonitoredCall"];
+
+        //$prefixes = ["MTA NYCT_", "MTA_", "MTA_NYCT", "MTABC_", "NYCT_"];
+
+        $stop["VisitNumber"] = (string) $monitored_call["VisitNumber"];
+        $stop["StopPointName"] = (string) $monitored_call["StopPointName"];
+        $stop["MonitoringRef"] = (string) str_replace($monitored_vehicle_journey["OperatorRef"] . "_", "", $monitored_call["StopPointRef"]);
+
+        $stop["LineRef"] = (string) $monitored_vehicle_journey["LineRef"];
+
+        //$stop["PublishedLineName"] = $monitored_vehicle_journey["PublishedLineName"];
+        $stop["OperatorRef"] = (string) $monitored_vehicle_journey["OperatorRef"];
+
+        $stops[$monitored_call["StopPointRef"]] = $stop;
+
+    }
+
+    return $stops; 
+
+}
+
 }
 
 ?>
