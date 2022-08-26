@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
-use App\Mta\BusTime\BusTime;
-use App\Models\Stop;
 use App\Models\Line;
+use App\Models\Stop;
+use App\Mta\BusTime\BusTime;
+use Illuminate\Database\Seeder;
 
 class StopSeeder extends Seeder
 {
@@ -19,49 +17,46 @@ class StopSeeder extends Seeder
     public function run()
     {
         $lines = Line::all();
-        
+
         $stops = BusTime::getUniqueStops();
 
-        foreach($stops as $stop_point_ref => $stop){
+        foreach ($stops as $stop_point_ref => $stop) {
 
+            try {
+                // throws an error because filter implicitly casts the collection to an array
 
-            // throws an error because filter implicitly casts the collection to an array
+                // $line = $lines->filter(function($item, $stop) {
+                //     $bool = $item->line_ref == $stop["LineRef"];
+                //     return $bool;
 
-            // $line = $lines->filter(function($item, $stop) {
-            //     $bool = $item->line_ref == $stop["LineRef"];
-            //     return $bool;
-            
-            // })->first();
+                // })->first();
 
-           // $line = Line::where("line_ref", "=", $stop["LineRef"])->first();
+                //$line = Line::where("line_ref", "=", $stop["LineRef"])->first();
 
-           $line = null; 
+                $line = null;
 
-           foreach($lines as $item){
+                foreach ($lines as $item) {
 
-            if(BusTime::normalizeLineRef($item->line_ref) == BusTime::normalizeLineRef($stop["LineRef"])){
-                $line = $item;
+                    if ($item->line_ref == $stop["LineRef"]) {
+                        $line = $item;
+                    }
+
+                }
+
+                Stop::create([
+
+                    "visit_number" => $stop["VisitNumber"],
+                    "stop_point_name" => $stop["StopPointName"],
+                    "stop_point_ref" => $stop_point_ref,
+                    "monitoring_ref" => $stop["MonitoringRef"],
+                    "operator_ref" => $stop["OperatorRef"],
+                    "line_id" => $line->id,
+                    "line_ref" => $stop["LineRef"],
+
+                ]);
+            } catch (\Exception$e) {
+                echo $e->getMessage();
             }
-
-           }
-
-            if(!is_object($line)){
-
-                dd($line, $stop);
-
-            }
-        
-            Stop::create([
-
-                "visit_number"=>$stop["VisitNumber"],
-                "stop_point_name"=>$stop["StopPointName"],
-                "stop_point_ref"=>$stop_point_ref,
-                "monitoring_ref"=>$stop["MonitoringRef"],
-                "operator_ref"=>$stop["OperatorRef"],
-                "line_id"=>$line->id,
-                "line_ref"=>$stop["LineRef"],
-
-            ]);
 
         }
 

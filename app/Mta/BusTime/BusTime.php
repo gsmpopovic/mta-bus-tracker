@@ -172,18 +172,6 @@ public static function getUniqueLines(){
 
 }
 
-public static function normalizeLineRef($line_ref){
-
-    $prefixes = ["MTA NYCT_", "MTA_", "MTA_NYCT", "MTABC_", "NYCT_", "MTA NYCT_"];
-
-    $line_ref = str_replace($prefixes, "", $line_ref);
-    $line_ref = (string) str_replace("+", "-SBS", $line_ref);
-
-
-    return $line_ref;
-
-}
-
 public static function getUniqueStops(){
 
     $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
