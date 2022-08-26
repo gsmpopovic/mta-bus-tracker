@@ -49,7 +49,7 @@ class BusTime {
 
     public function captureResponse($response = new \Psr\Http\Message\ResponseInterface()){
 
-        if(isset($response) && isset($response->getBody())){
+        if(isset($response) && ($response->getBody() !== null)){
 
             $this->response = $response; 
 
