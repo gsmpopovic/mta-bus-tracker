@@ -41,9 +41,17 @@ class BusTime {
         
         $query_params = $this->queryParams();
 
-        $response = $client->send($request, $query_params);
+        try {
 
-        $this->captureResponse($response);
+            $response = $client->send($request, $query_params);
+
+            $this->captureResponse($response);
+
+        } catch(\GuzzleHttp\Exception\ClientException $e) {
+
+            echo (string) $e->getResponse();
+
+        }
 
     }
 
