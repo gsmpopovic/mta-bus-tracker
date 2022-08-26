@@ -211,6 +211,25 @@ public static function getUniqueStops(){
 
 }
 
+public static function getUniqueBuses(){
+
+    $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+
+    $buses = [];
+
+    foreach($vehicle_activity as $activity){
+
+        $bus = [];
+
+        $monitored_vehicle_journey = $activity["MonitoredVehicleJourney"];
+
+
+    }
+
+    return $buses; 
+
+}
+
 }
 
 ?>
