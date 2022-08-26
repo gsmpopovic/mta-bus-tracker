@@ -4,13 +4,15 @@ namespace App\Mta\BusTime;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use \Psr\Http\Message\ResponseInterface;
+use \GuzzleHttp\Exception\ClientException;
 
 
 class BusTime {
 
     private $api_key = "";
-    private $response = [];
-    private $response_body = [];
+    public $response = [];
+    public $response_body = [];
 
     public function __construct(){
 
@@ -31,31 +33,7 @@ class BusTime {
 
     }
 
-    public function monitorVehicles(){
-
-        $client = new Client();
-        
-        $url = $this->siriVehicleMonitoringUrl();
-
-        $request = new Request('GET', $url);
-        
-        $query_params = $this->queryParams();
-
-        try {
-
-            $response = $client->send($request, $query_params);
-
-            $this->captureResponse($response);
-
-        } catch(\GuzzleHttp\Exception\ClientException $e) {
-
-            echo (string) $e->getResponse();
-
-        }
-
-    }
-
-    public function captureResponse($response = new \Psr\Http\Message\ResponseInterface()){
+    public function captureResponse(ResponseInterface $response){
 
         if(isset($response) && ($response->getBody() !== null)){
 
@@ -64,14 +42,6 @@ class BusTime {
             $this->response_body = json_decode($response->getBody(), true);
         
         }
-
-    }
-
-    public function siriVehicleMonitoringUrl(){
-
-        $url = config("mta.bustime.api.siri_base_uri") . config("mta.bustime.api.siri_endpoints.vehicle_monitoring");
-
-        return $url; 
 
     }
 
@@ -97,6 +67,66 @@ class BusTime {
     }
 
     public function monitorStops(){
+
+        $client = new Client();
+        
+        $url = $this->getSiriStopMonitoringUrl();
+
+        $request = new Request('GET', $url);
+        
+        $query_params = $this->queryParams();
+
+        try {
+
+            $response = $client->send($request, $query_params);
+
+            $this->captureResponse($response);
+
+        } catch(ClientException $e) {
+
+            echo (string) $e->getResponse();
+
+        }
+
+    }
+
+    public function monitorVehicles(){
+
+        $client = new Client();
+        
+        $url = $this->getSiriVehicleMonitoringUrl();
+
+        $request = new Request('GET', $url);
+        
+        $query_params = $this->queryParams();
+
+        try {
+
+            $response = $client->send($request, $query_params);
+
+            $this->captureResponse($response);
+
+        } catch(ClientException $e) {
+
+            echo (string) $e->getResponse();
+
+        }
+
+    }
+
+    public function getSiriVehicleMonitoringUrl(){
+
+        $url = config("mta.bustime.api.siri_base_uri") . config("mta.bustime.api.siri_endpoints.vehicle_monitoring");
+
+        return $url; 
+
+    }
+
+    public function getSiriStopMonitoringUrl(){
+
+        $url = config("mta.bustime.api.siri_base_uri") . config("mta.bustime.api.siri_endpoints.stop_monitoring");
+
+        return $url; 
 
     }
 
