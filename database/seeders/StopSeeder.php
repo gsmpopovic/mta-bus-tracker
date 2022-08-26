@@ -55,7 +55,10 @@ class StopSeeder extends Seeder
 
                 ]);
             } catch (\Exception$e) {
-                echo $e->getMessage();
+
+                echo "\n" . $e->getMessage() . "\n";
+                echo "\n Stop, monitoring ref: " . $stop["MonitoringRef"] . "\n";
+            
             }
 
         }

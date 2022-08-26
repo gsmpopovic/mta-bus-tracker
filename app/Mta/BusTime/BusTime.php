@@ -157,7 +157,7 @@ class BusTime
 
         } catch (\Exception$e) {
 
-            echo $e->getMessage();
+            echo "\n" . $e->getMessage() . "\n";
 
         }
 

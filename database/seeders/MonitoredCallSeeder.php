@@ -39,7 +39,10 @@ class MonitoredCallSeeder extends Seeder
 
                 }
             } catch (\Exception $e) {
-                echo $e->getMessage();
+
+                echo "\n" . $e->getMessage() . "\n";
+                echo "\n Monitored Call, vehicle ref: " . $monitored_call["vehicle_ref"] . "\n";
+            
             }
 
         }

@@ -25,7 +25,9 @@ class JourneySeeder extends Seeder
                 Journey::create($journey);
 
             } catch (\Exception$e) {
-                echo $e->getMessage();
+
+                echo "\n" . $e->getMessage() . "\n";
+            
             }
 
         }
