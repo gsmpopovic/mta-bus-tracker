@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('destinations', function (Blueprint $table) {
             $table->id();
-            $table->string("destination_name")->null(); //"DestinationName": "BAY RIDGE SHORE RD via 5 AV"
+            $table->string("destination_name")->nullable(); //"DestinationName": "BAY RIDGE SHORE RD via 5 AV"
             $table->foreignId("line_id")->references("id")->on("lines");
             $table->timestamps();
         });

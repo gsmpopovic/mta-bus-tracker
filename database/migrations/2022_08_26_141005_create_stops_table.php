@@ -63,11 +63,11 @@ return new class extends Migration
         */
         Schema::create('stops', function (Blueprint $table) {
             $table->id();
-            $table->string("stop_point_ref")->null(); // "StopPointRef": "MTA_308214",
-            $table->string("stop_point_name")->null(); // "StopPointName": "5 AV/UNION ST"
-            $table->string("monitoring_ref")->null(); //StopPointREf without the agency prefix 
-            $table->string("operator_ref")->null(); // "OperatorRef": "MTA NYCT"
-            $table->integer("visit_number")->null(); // "VisitNumber": "1"
+            $table->string("stop_point_ref")->nullable(); // "StopPointRef": "MTA_308214",
+            $table->string("stop_point_name")->nullable(); // "StopPointName": "5 AV/UNION ST"
+            $table->string("monitoring_ref")->nullable(); //StopPointREf without the agency prefix 
+            $table->string("operator_ref")->nullable(); // "OperatorRef": "MTA NYCT"
+            $table->integer("visit_number")->nullable(); // "VisitNumber": "1"
             $table->foreignId("line_id")->references("id")->on("lines");
 
             $table->string("line_ref");

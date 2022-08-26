@@ -63,8 +63,8 @@ return new class extends Migration
 
         Schema::create('lines', function (Blueprint $table) {
             $table->id();
-            $table->string("line_ref")->null(); //"LineRef": "MTA NYCT_B63",
-            $table->string("published_line_name")->null(); //"PublishedLineName": "B63",
+            $table->string("line_ref")->nullable(); //"LineRef": "MTA NYCT_B63",
+            $table->string("published_line_name")->nullable(); //"PublishedLineName": "B63",
             $table->timestamps();
         });
     }
