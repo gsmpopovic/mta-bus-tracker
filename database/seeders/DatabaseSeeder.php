@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\LineSeeder;
+use Database\Seeders\StopSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +22,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $line_seeder = new LineSeeder;
+        $line_seeder->run();
+
+        $stop_seeder = new StopSeeder;
+        $stop_seeder->run();
+
     }
 }
