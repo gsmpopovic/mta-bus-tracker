@@ -16,9 +16,11 @@ class StopSeeder extends Seeder
      */
     public function run()
     {
-        $lines = Line::all();
+        // $lines = Line::all();
 
-        $stops = BusTime::getUniqueStops();
+        $lines = \App\Models\Line::all()->pluck('id', 'line_ref')->toArray();
+
+        $stops = BusTime::getUniqueStopsSeed();
 
         foreach ($stops as $stop_point_ref => $stop) {
 
@@ -33,27 +35,24 @@ class StopSeeder extends Seeder
 
                 //$line = Line::where("line_ref", "=", $stop["LineRef"])->first();
 
-                $line = null;
+                if(isset($lines[$stop["LineRef"]])){
 
-                foreach ($lines as $item) {
+                    $line_id = $lines[$stop["LineRef"]];
+                    
+                    Stop::create([
 
-                    if ($item->line_ref == $stop["LineRef"]) {
-                        $line = $item;
-                    }
+                        "visit_number" => $stop["VisitNumber"],
+                        "stop_point_name" => $stop["StopPointName"],
+                        "stop_point_ref" => $stop_point_ref,
+                        "monitoring_ref" => $stop["MonitoringRef"],
+                        "operator_ref" => $stop["OperatorRef"],
+                        "line_id" => $line_id,
+                        "line_ref" => $stop["LineRef"],
+    
+                    ]);
 
                 }
 
-                Stop::create([
-
-                    "visit_number" => $stop["VisitNumber"],
-                    "stop_point_name" => $stop["StopPointName"],
-                    "stop_point_ref" => $stop_point_ref,
-                    "monitoring_ref" => $stop["MonitoringRef"],
-                    "operator_ref" => $stop["OperatorRef"],
-                    "line_id" => $line->id,
-                    "line_ref" => $stop["LineRef"],
-
-                ]);
             } catch (\Exception$e) {
 
                 echo "\n" . $e->getMessage() . "\n";
