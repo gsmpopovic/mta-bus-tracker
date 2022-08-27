@@ -17,7 +17,7 @@ class LineSeeder extends Seeder
     public function run()
     {
 
-        $lines = BusTime::getUniqueLines();
+        $lines = BusTime::getUniqueLinesSeed();
 
         foreach($lines as $published_line_name => $line_ref){
 

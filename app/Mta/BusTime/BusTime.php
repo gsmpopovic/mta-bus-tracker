@@ -142,7 +142,7 @@ class BusTime
 
     /* Seeding functions */
 
-    public static function getSiriVehicleMonitoringActivityJson()
+    public static function getSiriVehicleMonitoringActivityJsonSeed()
     {
 
         try {
@@ -165,10 +165,10 @@ class BusTime
 
     }
 
-    public static function getUniqueLines()
+    public static function getUniqueLinesSeed()
     {
 
-        $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+        $vehicle_activity = self::getSiriVehicleMonitoringActivityJsonSeed();
 
         $lines = [];
 
@@ -184,10 +184,10 @@ class BusTime
 
     }
 
-    public static function getUniqueStops()
+    public static function getUniqueStopsSeed()
     {
 
-        $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+        $vehicle_activity = self::getSiriVehicleMonitoringActivityJsonSeed();
 
         $stops = [];
 
@@ -199,7 +199,6 @@ class BusTime
 
             if (!isset($monitored_vehicle_journey["MonitoredCall"])) {
                 continue;
-                //return $monitored_vehicle_journey;
             }
 
             $monitored_call = $monitored_vehicle_journey["MonitoredCall"];
@@ -209,10 +208,7 @@ class BusTime
             $stop["VisitNumber"] = (string) $monitored_call["VisitNumber"];
             $stop["StopPointName"] = (string) $monitored_call["StopPointName"];
             $stop["MonitoringRef"] = (string) str_replace($monitored_vehicle_journey["OperatorRef"] . "_", "", $monitored_call["StopPointRef"]);
-
             $stop["LineRef"] = (string) $monitored_vehicle_journey["LineRef"];
-
-            //$stop["PublishedLineName"] = $monitored_vehicle_journey["PublishedLineName"];
             $stop["OperatorRef"] = (string) $monitored_vehicle_journey["OperatorRef"];
 
             $stops[$monitored_call["StopPointRef"]] = $stop;
@@ -223,10 +219,10 @@ class BusTime
 
     }
 
-    public static function getMonitoredCalls()
+    public static function getMonitoredCallsSeed()
     {
 
-        $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+        $vehicle_activity = self::getSiriVehicleMonitoringActivityJsonSeed();
 
         $monitored_calls = [];
 
@@ -267,10 +263,10 @@ class BusTime
 
     }
 
-    public static function getUniqueBuses()
+    public static function getUniqueBusesSeed()
     {
 
-        $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+        $vehicle_activity = self::getSiriVehicleMonitoringActivityJsonSeed();
 
         $buses = [];
 
@@ -286,10 +282,10 @@ class BusTime
 
     }
 
-    public static function getJourneys()
+    public static function getJourneysSeed()
     {
 
-        $vehicle_activity = self::getSiriVehicleMonitoringActivityJson();
+        $vehicle_activity = self::getSiriVehicleMonitoringActivityJsonSeed();
 
         $journeys = [];
 

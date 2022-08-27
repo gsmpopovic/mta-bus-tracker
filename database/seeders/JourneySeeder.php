@@ -16,7 +16,7 @@ class JourneySeeder extends Seeder
     public function run()
     {
 
-        $journeys = BusTime::getJourneys();
+        $journeys = BusTime::getJourneysSeed();
 
         foreach ($journeys as $journey) {
 
