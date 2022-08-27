@@ -4,8 +4,8 @@ namespace App\Mta\BusTime;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Log;
 use \GuzzleHttp\Exception\ClientException;
-use \Psr\Http\Message\ResponseInterface;
 
 class BusTime
 {
@@ -35,7 +35,7 @@ class BusTime
 
     }
 
-    public function captureResponse(ResponseInterface $response)
+    public function captureResponse($response)
     {
 
         if (isset($response) && ($response->getBody() !== null)) {
@@ -113,6 +113,8 @@ class BusTime
             $response = $client->send($request, $query_params);
 
             $this->captureResponse($response);
+
+            $this->updateVehiclePositions();
 
         } catch (ClientException $e) {
 
@@ -328,9 +330,84 @@ class BusTime
 
     /* Seeding functions */
 
-    public function updateVehiclePositions(){
+    public function updateVehiclePositions()
+    {
+
+        //$journeys = \App\Models\Journey::all()->with("monitored_calls")->getDictionary();
+
+        $journeys = \App\Models\Journey::with("monitored_calls")->get()->keyBy('vehicle_ref');
+
+        Log::debug("Updating vehicle positions for " . count($journeys) . " journeys");
+
+        //Log::debug(json_encode($this->response_body));
 
         $vehicle_activity = $this->response_body["Siri"]["ServiceDelivery"]["VehicleMonitoringDelivery"][0]["VehicleActivity"];
+
+        foreach ($vehicle_activity as $activity) {
+
+            $monitored_vehicle_journey = $activity["MonitoredVehicleJourney"];
+
+            try {
+                if (isset($journeys[$monitored_vehicle_journey["VehicleRef"]])) {
+
+                    $journey = $journeys[$monitored_vehicle_journey["VehicleRef"]];
+
+                    Log::debug("\nUpdating Journey for #" . $journey->id);
+                    
+                    //$journey->line_ref"] = $monitored_vehicle_journey["LineRef"] ?? '';
+                    $journey->direction_ref = $monitored_vehicle_journey["DirectionRef"] ?? '';
+                    $journey->journey_pattern_ref = $monitored_vehicle_journey["JourneyPatternRef"] ?? '';
+                    //$journey->published_line_name"] = $monitored_vehicle_journey["PublishedLineName"] ?? '';
+                    //$journey->operator_ref"] = $monitored_vehicle_journey["OperatorRef"] ?? '';
+                    $journey->destination_name = $monitored_vehicle_journey["DestinationName"] ?? '';
+                    $journey->origin_aimed_departure_time = $monitored_vehicle_journey["OriginAimedDepartureTime"] ?? '';
+                    $journey->vehicle_longitude = $monitored_vehicle_journey["VehicleLocation"]["Longitude"] ?? '';
+                    $journey->vehicle_latitude = $monitored_vehicle_journey["VehicleLocation"]["Latitude"] ?? '';
+                    $journey->bearing = $monitored_vehicle_journey["Bearing"] ?? '';
+                    $journey->progress_rate = $monitored_vehicle_journey["ProgressRate"] ?? '';
+                    $journey->progress_status = $monitored_vehicle_journey["ProgressStatus"] ?? '';
+                    $journey->block_ref = $monitored_vehicle_journey["BlockRef"] ?? '';
+                    //$journey->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? '';
+                    $journey->monitored = $monitored_vehicle_journey["Monitored"] ?? false;
+
+                    if (isset($monitored_vehicle_journey["MonitoredCall"])) {
+                        $mc = $monitored_vehicle_journey["MonitoredCall"];
+
+                        foreach ($journey->monitored_calls as $monitored_call) {
+
+                            Log::debug("\nUpdating MC for " . $journey->vehicle_ref);
+
+                            $monitored_call->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? null;
+                            $monitored_call->aimed_arrival_time = $mc["AimedArrivalTime"] ?? null;
+                            $monitored_call->expected_arrival_time = $mc["ExpectedArrivalTime"] ?? null;
+                            $monitored_call->aimed_departure_time = $mc["AimedDepartureTime"] ?? null;
+                            $monitored_call->expected_departure_time = $mc["ExpectedDepartureTime"] ?? null;
+
+                            $distances = $mc["Extensions"]["Distances"];
+
+                            $monitored_call->presentable_distance = $distances["PresentableDistance"] ?? null;
+                            $monitored_call->distance_from_call = $distances["DistanceFromCall"] ?? null;
+                            $monitored_call->stops_from_call = $distances["StopsFromCall"] ?? null;
+                            $monitored_call->call_distance_along_route = $distances["CallDistanceAlongRoute"] ?? null;
+                            $monitored_call->stop_point_ref = $mc["StopPointRef"] ?? null;
+                            $monitored_call->visit_number = $mc["VisitNumber"] ?? null;
+                            $monitored_call->stop_point_name = $mc["StopPointName"] ?? null;
+
+                            $monitored_call->save();
+
+                        }
+
+                        $journey->save();
+
+                    }
+
+                }
+            } catch (\Exception$e) {
+                Log::debug("\ERROR UPDATING JOURNEY" . $e . "\n");
+
+            }
+
+        }
 
     }
 
