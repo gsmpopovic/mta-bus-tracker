@@ -140,6 +140,8 @@ class BusTime
 
     }
 
+    /* Seeding functions */
+
     public static function getSiriVehicleMonitoringActivityJson()
     {
 
@@ -246,10 +248,13 @@ class BusTime
             $monitored_call["expected_arrival_time"] = $mc["ExpectedArrivalTime"] ?? null;
             $monitored_call["aimed_departure_time"] = $mc["AimedDepartureTime"] ?? null;
             $monitored_call["expected_departure_time"] = $mc["ExpectedDepartureTime"] ?? null;
-            $monitored_call["presentable_distance"] = $mc["PresentableDistance"] ?? null;
-            $monitored_call["distance_from_call"] = $mc["DistanceFromCall"] ?? null;
-            $monitored_call["stops_from_call"] = $mc["StopsFromCall"] ?? null;
-            $monitored_call["call_distance_along_route"] = $mc["CallDistanceAlongRoute"] ?? null;
+
+            $distances = $mc["Extensions"]["Distances"];
+
+            $monitored_call["presentable_distance"] = $distances["PresentableDistance"] ?? null;
+            $monitored_call["distance_from_call"] = $distances["DistanceFromCall"] ?? null;
+            $monitored_call["stops_from_call"] = $distances["StopsFromCall"] ?? null;
+            $monitored_call["call_distance_along_route"] = $distances["CallDistanceAlongRoute"] ?? null;
             $monitored_call["stop_point_ref"] = $mc["StopPointRef"] ?? null;
             $monitored_call["visit_number"] = $mc["VisitNumber"] ?? null;
             $monitored_call["stop_point_name"] = $mc["StopPointName"] ?? null;
@@ -292,7 +297,7 @@ class BusTime
 
             $monitored_vehicle_journey = $activity["MonitoredVehicleJourney"] ?? '';
 
-            if ( isset($monitored_vehicle_journey["Monitored"]) && $monitored_vehicle_journey["Monitored"] == true) {
+            if (isset($monitored_vehicle_journey["Monitored"]) && $monitored_vehicle_journey["Monitored"] == true) {
 
                 $journey = [];
 
@@ -324,5 +329,7 @@ class BusTime
 
         return $journeys;
     }
+
+    /* Seeding functions */
 
 }
