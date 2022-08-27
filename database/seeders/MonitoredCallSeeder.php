@@ -33,16 +33,17 @@ class MonitoredCallSeeder extends Seeder
 
                     }
 
-                    $monitored_call["journey_id"] = $journey->id;
-
-                    MonitoredCall::create($monitored_call);
-
                 }
-            } catch (\Exception $e) {
+
+                $monitored_call["journey_id"] = $journey->id;
+
+                MonitoredCall::create($monitored_call);
+
+            } catch (\Exception$e) {
 
                 echo "\n" . $e->getMessage() . "\n";
                 echo "\n Monitored Call, vehicle ref: " . $monitored_call["vehicle_ref"] . "\n";
-            
+
             }
 
         }
