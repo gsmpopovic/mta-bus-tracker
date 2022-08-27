@@ -33,6 +33,7 @@ return new class extends Migration
             $table->id();
             
             $table->foreignId("journey_id")->references("id")->on("journeys");
+            $table->foreignId("stop_id")->references("id")->on("stops");
             $table->string("vehicle_ref")->nullable();
             $table->string("aimed_arrival_time")->nullable();
             $table->string("expected_arrival_time")->nullable();

@@ -11,6 +11,7 @@ class MonitoredCall extends Model
 
     public $fillable = [
         "vehicle_ref",
+        "stop_id",
         "journey_id",
         "aimed_arrival_time",
         "expected_arrival_time",
