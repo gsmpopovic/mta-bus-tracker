@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mta\BusTime\BusTime;
+use Illuminate\Support\Facades\Log; 
 
 class MonitorVehicles implements ShouldQueue
 {
@@ -35,7 +36,7 @@ class MonitorVehicles implements ShouldQueue
     public function handle()
     {
 
-        echo "\n" . "Executing job..." . "\n";
+        Log::debug('Executing monitor vehicles job...');
         $this->bustime->monitorVehicles();
 
     }
