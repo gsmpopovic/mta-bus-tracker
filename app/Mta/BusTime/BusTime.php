@@ -328,4 +328,10 @@ class BusTime
 
     /* Seeding functions */
 
+    public function updateVehiclePositions(){
+
+        $vehicle_activity = $this->response_body["Siri"]["ServiceDelivery"]["VehicleMonitoringDelivery"][0]["VehicleActivity"];
+
+    }
+
 }
