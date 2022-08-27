@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Journey;
+use App\Models\Stop;
 use App\Models\MonitoredCall;
 use App\Mta\BusTime\BusTime;
 use Illuminate\Database\Seeder;
@@ -16,28 +17,30 @@ class MonitoredCallSeeder extends Seeder
      */
     public function run()
     {
-        $journeys = Journey::all();
+        //$journeys = Journey::all();
 
-        $monitored_calls = BusTime::getMonitoredCalls();
+        $journeys = \App\Models\Journey::all()->pluck('id', 'vehicle_ref')->toArray();
+        $stops = \App\Models\Stop::all()->pluck('id', 'stop_point_ref')->toArray();
+
+        $monitored_calls = BusTime::getMonitoredCallsSeed();
 
         foreach ($monitored_calls as $monitored_call) {
 
             try {
-                $journey = null;
 
-                foreach ($journeys as $item) {
 
-                    if ($item->vehicle_ref == $monitored_call["vehicle_ref"]) {
+                if(isset($journeys[$monitored_call["vehicle_ref"]]) && isset($stops[$monitored_call["stop_point_ref"]])){
 
-                        $journey = $item;
+                    $journey_id = $journeys[$monitored_call["vehicle_ref"]];
 
-                    }
+                    $stop_id = $stops[$monitored_call["stop_point_ref"]];
+                
+                    $monitored_call["journey_id"] = $journey_id;
+                    $monitored_call["stop_id"] = $stop_id;
+
+                    MonitoredCall::create($monitored_call);
 
                 }
-
-                $monitored_call["journey_id"] = $journey->id;
-
-                MonitoredCall::create($monitored_call);
 
             } catch (\Exception$e) {
 
