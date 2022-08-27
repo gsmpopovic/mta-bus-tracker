@@ -353,22 +353,22 @@ class BusTime
                     $journey = $journeys[$monitored_vehicle_journey["VehicleRef"]];
 
                     Log::debug("\nUpdating Journey for #" . $journey->id);
-                    
+
                     //$journey->line_ref"] = $monitored_vehicle_journey["LineRef"] ?? '';
-                    $journey->direction_ref = $monitored_vehicle_journey["DirectionRef"] ?? '';
-                    $journey->journey_pattern_ref = $monitored_vehicle_journey["JourneyPatternRef"] ?? '';
+                    $journey->direction_ref = $monitored_vehicle_journey["DirectionRef"] ?? $journey->direction_ref;
+                    $journey->journey_pattern_ref = $monitored_vehicle_journey["JourneyPatternRef"] ?? $journey->journey_pattern_ref;
                     //$journey->published_line_name"] = $monitored_vehicle_journey["PublishedLineName"] ?? '';
                     //$journey->operator_ref"] = $monitored_vehicle_journey["OperatorRef"] ?? '';
-                    $journey->destination_name = $monitored_vehicle_journey["DestinationName"] ?? '';
-                    $journey->origin_aimed_departure_time = $monitored_vehicle_journey["OriginAimedDepartureTime"] ?? '';
-                    $journey->vehicle_longitude = $monitored_vehicle_journey["VehicleLocation"]["Longitude"] ?? '';
-                    $journey->vehicle_latitude = $monitored_vehicle_journey["VehicleLocation"]["Latitude"] ?? '';
-                    $journey->bearing = $monitored_vehicle_journey["Bearing"] ?? '';
-                    $journey->progress_rate = $monitored_vehicle_journey["ProgressRate"] ?? '';
-                    $journey->progress_status = $monitored_vehicle_journey["ProgressStatus"] ?? '';
-                    $journey->block_ref = $monitored_vehicle_journey["BlockRef"] ?? '';
+                    $journey->destination_name = $monitored_vehicle_journey["DestinationName"] ?? $journey->destination_name;
+                    $journey->origin_aimed_departure_time = $monitored_vehicle_journey["OriginAimedDepartureTime"] ?? $journey->origin_aimed_departure_time;
+                    $journey->vehicle_longitude = $monitored_vehicle_journey["VehicleLocation"]["Longitude"] ?? $journey->vehicle_longitude;
+                    $journey->vehicle_latitude = $monitored_vehicle_journey["VehicleLocation"]["Latitude"] ?? $journey->vehicle_latitude;
+                    $journey->bearing = $monitored_vehicle_journey["Bearing"] ?? $journey->bearing;
+                    $journey->progress_rate = $monitored_vehicle_journey["ProgressRate"] ?? $journey->progress_rate;
+                    $journey->progress_status = $monitored_vehicle_journey["ProgressStatus"] ?? $journey->progress_status;
+                    $journey->block_ref = $monitored_vehicle_journey["BlockRef"] ?? $journey->block_ref;
                     //$journey->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? '';
-                    $journey->monitored = $monitored_vehicle_journey["Monitored"] ?? false;
+                    $journey->monitored = $monitored_vehicle_journey["Monitored"] ?? $journey->monitored;
 
                     if (isset($monitored_vehicle_journey["MonitoredCall"])) {
                         $mc = $monitored_vehicle_journey["MonitoredCall"];
@@ -377,21 +377,21 @@ class BusTime
 
                             Log::debug("\nUpdating MC for " . $journey->vehicle_ref);
 
-                            $monitored_call->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? null;
-                            $monitored_call->aimed_arrival_time = $mc["AimedArrivalTime"] ?? null;
-                            $monitored_call->expected_arrival_time = $mc["ExpectedArrivalTime"] ?? null;
-                            $monitored_call->aimed_departure_time = $mc["AimedDepartureTime"] ?? null;
-                            $monitored_call->expected_departure_time = $mc["ExpectedDepartureTime"] ?? null;
+                            $monitored_call->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? $monitored_call->vehicle_ref;
+                            $monitored_call->aimed_arrival_time = $mc["AimedArrivalTime"] ?? $monitored_call->aimed_arrival_time;
+                            $monitored_call->expected_arrival_time = $mc["ExpectedArrivalTime"] ?? $monitored_call->expected_arrival_time;
+                            $monitored_call->aimed_departure_time = $mc["AimedDepartureTime"] ?? $monitored_call->aimed_departure_time;
+                            $monitored_call->expected_departure_time = $mc["ExpectedDepartureTime"] ?? $monitored_call->expected_departure_time;
 
                             $distances = $mc["Extensions"]["Distances"];
 
-                            $monitored_call->presentable_distance = $distances["PresentableDistance"] ?? null;
-                            $monitored_call->distance_from_call = $distances["DistanceFromCall"] ?? null;
-                            $monitored_call->stops_from_call = $distances["StopsFromCall"] ?? null;
-                            $monitored_call->call_distance_along_route = $distances["CallDistanceAlongRoute"] ?? null;
-                            $monitored_call->stop_point_ref = $mc["StopPointRef"] ?? null;
-                            $monitored_call->visit_number = $mc["VisitNumber"] ?? null;
-                            $monitored_call->stop_point_name = $mc["StopPointName"] ?? null;
+                            $monitored_call->presentable_distance = $distances["PresentableDistance"] ?? $monitored_call->presentable_distance;
+                            $monitored_call->distance_from_call = $distances["DistanceFromCall"] ?? $monitored_call->distance_from_call;
+                            $monitored_call->stops_from_call = $distances["StopsFromCall"] ?? $monitored_call->stops_from_call;
+                            $monitored_call->call_distance_along_route = $distances["CallDistanceAlongRoute"] ?? $monitored_call->call_distance_along_route;
+                            $monitored_call->stop_point_ref = $mc["StopPointRef"] ?? $monitored_call->stop_point_ref;
+                            $monitored_call->visit_number = $mc["VisitNumber"] ?? $monitored_call->visit_number;
+                            $monitored_call->stop_point_name = $mc["StopPointName"] ?? $monitored_call->stop_point_name;
 
                             $monitored_call->save();
 
