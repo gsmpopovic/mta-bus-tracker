@@ -27,4 +27,8 @@ class Journey extends Model
         "vehicle_ref",
     ];
 
+    public function monitored_calls(){
+        return $this->hasMany(\App\Models\MonitoredCall::class, "journey_id", "id");
+    }
+
 }
