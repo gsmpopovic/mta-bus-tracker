@@ -133,6 +133,93 @@ class BusTime
 
     }
 
+    public function seedObaMtaRoutes(){
+
+        $routes = $this->processObaMtaRoutes();
+
+        foreach($routes as $route){
+
+            $params = [];
+
+            // 245 => array:8 [
+            //     "id" => "MTA NYCT_B38"
+            //     "shortName" => "B38"
+            //     "longName" => "Ridgewood - Downtown Brooklyn"
+            //     "description" => "via DeKalb & Lafayette Av"
+            //     "type" => "3"
+            //     "color" => "00AEEF"
+            //     "textColor" => "FFFFFF"
+            //     "agencyId" => "MTA NYCT"
+            //   ]
+
+            $params["short_name"] = $route["shortName"];
+            $params["long_name"] = $route["longName"];
+            $params["description"] = $route["description"];
+            $params["type"] = $route["type"];
+            $params["color"] = $route["color"];
+            $params["text_color"] = $route["textColor"];
+            $params["agency_id"] = $route["agencyId"];
+
+
+        }
+
+    }
+
+    public function processObaMtaRoutes(){
+
+        $this->getObaMtaRoutes();
+
+        /*
+        [
+        "version" => "2",
+        "code" => "200",
+        "currentTime" => "1661705838092",
+        "text" => "OK",
+        "data" => [
+        "@attributes" => [
+            "class" => "listWithReferences",
+        ],
+        "references" => [
+            "agencies" => [
+            "agency" => [
+                "id" => "MTA NYCT",
+                "name" => "MTA New York City Transit",
+                "url" => "http://www.mta.info",
+                "timezone" => "America/New_York",
+                "lang" => "en",
+                "phone" => "718-330-1234",
+                "privateService" => "false",
+            ],
+            ],
+        ],
+        "list" => [
+            "route" => [
+        */
+
+        $body = $this->response_body;
+
+        $routes = $body["data"]["list"]["route"];
+
+        /*
+
+                245 => array:8 [
+          "id" => "MTA NYCT_B38"
+          "shortName" => "B38"
+          "longName" => "Ridgewood - Downtown Brooklyn"
+          "description" => "via DeKalb & Lafayette Av"
+          "type" => "3"
+          "color" => "00AEEF"
+          "textColor" => "FFFFFF"
+          "agencyId" => "MTA NYCT"
+        ]
+
+        */
+
+        return $routes;
+
+
+    }
+
     public function getObaMtaRoutes(){
 
         $client = new Client();
