@@ -372,6 +372,8 @@ class BusTime
                     //$journey->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? '';
                     $journey->monitored = $monitored_vehicle_journey["Monitored"] ?? $journey->monitored;
 
+                    $journey->save();
+
                     if (isset($monitored_vehicle_journey["MonitoredCall"])) {
                         $mc = $monitored_vehicle_journey["MonitoredCall"];
 
@@ -400,8 +402,6 @@ class BusTime
                             $monitored_call->save();
 
                         }
-
-                        $journey->save();
 
                     }
 
