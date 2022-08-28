@@ -42,8 +42,17 @@ class BusTime
 
             $this->response = $response;
 
-            $this->response_body = json_decode($response->getBody(), true);
+            $headers = $this->response->getHeaders();
 
+            if($headers["Content-Type"][0] =="application/xml;charset=ISO-8859-1"){
+
+                $xml = simplexml_load_string($this->response->getBody(),'SimpleXMLElement',LIBXML_NOCDATA);
+                $this->response_body = json_decode(json_encode($xml), true);
+            }
+            else {
+                $this->response_body = json_decode($response->getBody(), true);
+
+            }
         }
 
     }
@@ -121,6 +130,74 @@ class BusTime
             echo (string) $e->getResponse();
 
         }
+
+    }
+
+    public function getObaMtaRoutes(){
+
+        $client = new Client();
+
+        $url = $this->getObaMtaRoutesUrl();
+
+        $request = new Request('GET', $url);
+
+        $query_params = $this->queryParams();
+
+        try {
+
+            $response = $client->send($request, $query_params);
+
+            $this->captureResponse($response);
+
+        } catch (ClientException $e) {
+
+            echo (string) $e->getResponse();
+
+        }
+
+    }
+
+    public function getObaMtaStopsForRoute($route){
+
+        $client = new Client();
+
+        $url = $this->getObaMtaStopsForRouteUrl($route);
+
+        $request = new Request('GET', $url);
+
+        $query_params = $this->queryParams();
+
+        try {
+
+            $response = $client->send($request, $query_params);
+
+            $this->captureResponse($response);
+
+            $this->updateVehiclePositions();
+
+        } catch (ClientException $e) {
+
+            echo (string) $e->getResponse();
+
+        }
+
+    }
+
+    public function getObaMtaRoutesUrl()
+    {
+
+        $url = config("mta.bustime.api.oba_base_uri") . config("mta.bustime.api.oba_endpoints.mta_routes");
+
+        return $url;
+
+    }
+
+    public function getObaMtaStopsForRouteUrl($route)
+    {
+
+        $url = config("mta.bustime.api.oba_base_uri") . config("mta.bustime.api.siri_endpoints.stops_for_route") . $route . ".json";
+
+        return $url;
 
     }
 
