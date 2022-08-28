@@ -333,11 +333,13 @@ class BusTime
     public function updateVehiclePositions()
     {
 
+        //\DB::Connection()->disableQueryLog();
+
         //$journeys = \App\Models\Journey::all()->with("monitored_calls")->getDictionary();
 
         $journeys = \App\Models\Journey::with("monitored_calls")->get()->keyBy('vehicle_ref');
 
-        Log::debug("Updating vehicle positions for " . count($journeys) . " journeys");
+        Log::debug("Start updating vehicle positions for " . count($journeys) . " journeys");
 
         //Log::debug(json_encode($this->response_body));
 
@@ -352,7 +354,7 @@ class BusTime
 
                     $journey = $journeys[$monitored_vehicle_journey["VehicleRef"]];
 
-                    Log::debug("\nUpdating Journey for #" . $journey->id);
+                   // Log::debug("\nUpdating Journey for #" . $journey->id);
 
                     //$journey->line_ref"] = $monitored_vehicle_journey["LineRef"] ?? '';
                     $journey->direction_ref = $monitored_vehicle_journey["DirectionRef"] ?? $journey->direction_ref;
@@ -373,9 +375,11 @@ class BusTime
                     if (isset($monitored_vehicle_journey["MonitoredCall"])) {
                         $mc = $monitored_vehicle_journey["MonitoredCall"];
 
-                        foreach ($journey->monitored_calls as $monitored_call) {
+                        if(isset($journey->monitored_call) && is_object($journey->monitored_call)) {
 
-                            Log::debug("\nUpdating MC for " . $journey->vehicle_ref);
+                            $monitored_call = $journey->monitored_call;
+
+                           // Log::debug("\nUpdating MC for " . $journey->vehicle_ref);
 
                             $monitored_call->vehicle_ref = $monitored_vehicle_journey["VehicleRef"] ?? $monitored_call->vehicle_ref;
                             $monitored_call->aimed_arrival_time = $mc["AimedArrivalTime"] ?? $monitored_call->aimed_arrival_time;
@@ -402,13 +406,15 @@ class BusTime
                     }
 
                 }
+                
             } catch (\Exception$e) {
                 Log::debug("\ERROR UPDATING JOURNEY" . $e . "\n");
 
-            }
+            } 
 
         }
 
+        Log::debug("Stop updating vehicle positions for " . count($journeys) . " journeys");
     }
 
 }
