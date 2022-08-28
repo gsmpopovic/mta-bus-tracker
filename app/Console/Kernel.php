@@ -18,9 +18,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        echo "\n Running job at " . now() , "\n";
         // $schedule->job(new MonitorVehicles(new BusTime))->everyMinute();
-        $schedule->job(new MonitorVehicles(new BusTime))->everyFiveMinutes();
+        $schedule->job(new MonitorVehicles(new BusTime))->everyTwoMinutes();
 
         
     }
