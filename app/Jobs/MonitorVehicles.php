@@ -36,7 +36,7 @@ class MonitorVehicles implements ShouldQueue
     public function handle()
     {
 
-        Log::debug('Executing monitor vehicles job...');
+        Log::debug('Start executing monitor vehicles job...');
         $this->bustime->monitorVehicles();
 
     }
