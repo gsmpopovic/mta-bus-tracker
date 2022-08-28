@@ -28,7 +28,7 @@ class Journey extends Model
     ];
 
     public function monitored_calls(){
-        return $this->hasMany(\App\Models\MonitoredCall::class, "journey_id", "id");
+        return $this->hasOne(\App\Models\MonitoredCall::class, "journey_id", "id");
     }
 
 }
