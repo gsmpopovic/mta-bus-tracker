@@ -247,7 +247,7 @@ class BusTime
 
     }
 
-    public function getObaMtaStopsForRoute($route){
+    public function getObaMtaStopsForRoute($route, $params = []){
 
         $client = new Client();
 
@@ -255,10 +255,14 @@ class BusTime
 
         $request = new Request('GET', $url);
 
-        $params = [
-            "includePolylines"=>false,
-            "version"=>2
-        ];
+        if(empty($params)){
+
+            $params = [
+                "includePolylines"=>false,
+                "version"=>2
+            ];
+        
+        }
 
         $query_params = $this->queryParams($params);
 
