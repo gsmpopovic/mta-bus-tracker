@@ -27,7 +27,7 @@ return [
                 "agencies" => "agencies-with-coverage.xml",
                 "mta_routes" => "routes-for-agency/MTA%20NYCT.xml",
                 "stop" => "stop/", // stop/MTA_STOP-ID.xml
-                "stops_for_route" => "stops-for-route/MTA%20NYCT_", //stops-for-route/MTA%20NYCT_M1.json?key=YOUR_KEY_HERE&includePolylines=false&version=2
+                "stops_for_route" => "stops-for-route/", //stops-for-route/MTA%20NYCT_M1.json?key=YOUR_KEY_HERE&includePolylines=false&version=2
                 "stops_near_location" => "stops-for-location.json", // ?lat=40.748433&lon=-73.985656&latSpan=0.005&lonSpan=0.005&key=YOUR_KEY_HERE
 
             ],

@@ -152,6 +152,7 @@ class BusTime
             //     "agencyId" => "MTA NYCT"
             //   ]
 
+            $params["line_ref"] = $route["id"];
             $params["short_name"] = $route["shortName"];
             $params["long_name"] = $route["longName"];
             $params["description"] = $route["description"];
@@ -159,6 +160,8 @@ class BusTime
             $params["color"] = $route["color"];
             $params["text_color"] = $route["textColor"];
             $params["agency_id"] = $route["agencyId"];
+
+            \App\Models\MtaBusRoute::create($params);
 
 
         }
@@ -252,7 +255,12 @@ class BusTime
 
         $request = new Request('GET', $url);
 
-        $query_params = $this->queryParams();
+        $params = [
+            "includePolylines"=>false,
+            "version"=>2
+        ];
+
+        $query_params = $this->queryParams($params);
 
         try {
 
@@ -260,11 +268,10 @@ class BusTime
 
             $this->captureResponse($response);
 
-            $this->updateVehiclePositions();
-
+            
         } catch (ClientException $e) {
 
-            echo (string) $e->getResponse();
+            echo $e->getMessage();
 
         }
 
@@ -282,7 +289,7 @@ class BusTime
     public function getObaMtaStopsForRouteUrl($route)
     {
 
-        $url = config("mta.bustime.api.oba_base_uri") . config("mta.bustime.api.siri_endpoints.stops_for_route") . $route . ".json";
+        $url = config("mta.bustime.api.oba_base_uri") . config("mta.bustime.api.oba_endpoints.stops_for_route") . $route . ".json";
 
         return $url;
 
