@@ -241,7 +241,7 @@ class BusTime
 
         } catch (ClientException $e) {
 
-            echo (string) $e->getResponse();
+            Log::debug(json_encode($e));
 
         }
 
